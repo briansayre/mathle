@@ -97,3 +97,22 @@ a:hover {
   background-color: #17181b;
   border-radius: 5px;
 }
+
+
+#result-full {
+  position: absolute;
+  top: 0;
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#result {
+  margin-top: 25px;
+  max-width: 75vw;
+  width: 500px;
+  padding: 30px;
+  background-color: #17181b;
+  border-radius: 5px;
+}

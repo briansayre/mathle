@@ -105,7 +105,7 @@ function check() {
     var numbersInAnswer = [];
 
     if (!numbersInAnswerStr) {
-        alert("No input");
+        showResult("No input");
         return;
     }
 
@@ -115,14 +115,14 @@ function check() {
 
     // check length
     if (numbersInAnswer == null || numbersInAnswer.length != 4) {
-        alert("Didn't use all numbers");
+        showResult("Didn't use all numbers");
         return;
     }
 
     // validate all numbers are there
 
     if (!(numbersInAnswer.sort().join(',') === operands.sort().join(','))) {
-        alert("Used invalid numbers");
+        showResult("Used invalid numbers");
         return;
     }
 
@@ -130,7 +130,7 @@ function check() {
 
     if (parseInt(inputVal) == parseInt(document.getElementById('goal').innerHTML)) {
 
-        alert("Correct!");
+        showResult("Correct!");
 
         var todayDate = new Date()
         var today = todayDate.toLocaleDateString("en-US");
@@ -150,7 +150,7 @@ function check() {
         }
 
     } else {
-        alert(inputVal + " is not equal to " + document.getElementById('goal').innerHTML);
+        showResult(inputVal + " is not equal to " + document.getElementById('goal').innerHTML);
     }
     document.cookie = 'mstats=' + JSON.stringify(mstats) + ';AC-C=ac-c;expires=Fri, 31 Dec 9999 23:59:59 GMT;path=/;SameSite=Lax';
     document.getElementById('games').innerHTML = "Games played: " + mstats.games;
@@ -216,11 +216,17 @@ function toggleInfo() {
 function share() {
     const shareData = {
         title: 'MATHLE',
-        text: ` Games played: ` + mstats.games +
-            ` Wins: ` + mstats.wins +
-            ` Win Percentage: ` + mstats.wins / mstats.games * 100 + "%" +
-            ` Streak: ` + mstats.streak + ``,
+        text: `Time to play MATHLE, nerd. 
+            Games played: ` + mstats.games + `
+            Wins: ` + mstats.wins + `
+            Win Percentage: ` + mstats.wins / mstats.games * 100 + "%" + `
+            Streak: ` + mstats.streak + ``,
         url: 'https://briansayre.com/mathle/'
     }
     navigator.share(shareData)
+}
+
+function  showResult(message) {
+    document.getElementById("result-text").innerHTML = message;
+    document.getElementById("result-full").style.display = "block";
 }

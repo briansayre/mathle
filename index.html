@@ -38,15 +38,15 @@
 
         <div id="info-full">
             <div id="info">
-                <h2>How to play:</h2>
-                * Enter a math equation using the 4 numbers on the left to equal the teal number on the right.<br><br>
-                * Have to use all 4 numbers and can only use each number once.<br><br>
-                * Have fun, nerd.<br><br>
                 <h2>Stats:</h2>
                 <span id="games"></span><br><br>
                 <span id="wins"></span><br><br>
                 <span id="win-perc"></span><br><br>
                 <span id="streak"></span><br><br>
+                <h2>How to play:</h2>
+                * Enter a math equation using the 4 numbers on the left to equal the teal number on the right.<br><br>
+                * Have to use all 4 numbers and can only use each number once.<br><br>
+                * Have fun, nerd.<br><br>
                 <h2>Valid operators:</h2>
                 * Add: x + y<br><br>
                 * Divide: x / y<br><br>
@@ -56,6 +56,14 @@
                 * Subtract: x - y<br><br>
                 * Parenthesis for order of operations<br><br>
                 <button onclick="toggleInfo()">CLOSE</button>
+            </div>
+        </div>
+
+        <div id="result-full">
+            <div id="result">
+                <h2 id=result-text>How to play:</h2>
+                <br><br>
+                <button onclick="document.getElementById('result-full').style.display = 'none'">CLOSE</button>
             </div>
         </div>
 
