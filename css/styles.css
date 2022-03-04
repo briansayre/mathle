@@ -1,97 +1,98 @@
-html, body {
-    font-family: 'Roboto Mono', monospace;
-    background-color: #17181B;
-    color: white;
-    margin: 0;
-    padding: 0;
+html,
+body {
+  font-family: "Roboto Mono", monospace;
+  background-color: #17181b;
+  color: white;
+  margin: 0;
+  padding: 0;
 }
 
 h1 {
-    font-size: 2.5rem;
-    margin-top: 25px;
-    margin-bottom: 50px;
-} 
+  font-size: 2.5rem;
+  margin-top: 25px;
+  margin-bottom: 50px;
+}
 
 #numbers {
-    margin-top: 25px;
-    margin-bottom: 50px;
-    text-align: center;
+  margin-top: 25px;
+  margin-bottom: 50px;
+  text-align: center;
 }
 
 .number {
-    background-color: #2E3134;
-    display: inline-block;
-    min-width: 55px;
-    padding: 5px;
-    border-radius: 5px;
-    font-size: 2.5rem;
+  background-color: #2e3134;
+  display: inline-block;
+  min-width: 55px;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 2.5rem;
 }
 
 #goal {
-    color: #61beca;
+  color: #61beca;
 }
 
 #math-input {
-    text-align: center;
-    height: 35px;
-    text-decoration: none;
-    width: 250px;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    background-color: white;
-    margin-top: 25px;
+  /* text-align: center; */
+  height: 35px;
+  text-decoration: none;
+  width: 250px;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  background-color: white;
+  margin-top: 25px;
 }
 
 button {
-    margin-top: 25px;
-    margin-bottom: 25px;
-    height: 30px;
-    color: #17181B;
-    text-decoration: none;
-    border: none;
-    border-radius: 5px;
-    width: 200px;
-    height: 45px;
-    background-color: #61beca;
-    font-size: .8rem;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  height: 30px;
+  color: #17181b;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  width: 200px;
+  height: 45px;
+  background-color: #61beca;
+  font-size: 0.8rem;
 }
 
 button:active {
-    background-color: white;
-    color: #61beca;
+  background-color: white;
+  color: #61beca;
 }
 
 button:visited {
-    background-color: white;
+  background-color: white;
 }
 
 button:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 a {
-    font-size: .8rem;
+  font-size: 0.8rem;
 }
 
 a:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 #info-full {
-    position: absolute;
-    top: 0;
-    display: none;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0,0,0, 0.5);
+  position: absolute;
+  top: 0;
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 #info {
-    margin-top: 25px;
-    margin-top: 25px;
-    width: 500px;
-    padding: 30px 60px 60px 60px;
-    background-color: #17181B;
-    border-radius: 5px;
+  margin-top: 25px;
+  margin-top: 25px;
+  width: 500px;
+  padding: 30px 60px 60px 60px;
+  background-color: #17181b;
+  border-radius: 5px;
 }
