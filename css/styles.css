@@ -1,8 +1,19 @@
 html, body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Roboto Mono', monospace;
     background-color: #17181B;
     color: white;
+    margin: 0;
+    padding: 0;
 }
+
+h1 {
+    font-size: 3.5rem;
+    margin: 30px;
+} 
+
+a:hover {
+    cursor: pointer;
+} 
 
 #numbers {
     margin: 50px 0 0 0;
@@ -24,7 +35,7 @@ html, body {
 }
 
 #inputs {
-    margin-top: 50px;
+    margin: 30px 30px 100px 30px;
     width: 300px;
 }
 
@@ -50,9 +61,30 @@ button {
 }
 
 button:active {
-    background-color: red;
+    background-color: #61beca;
 }
 
 button:visited {
     background-color: white;
+}
+
+button:hover {
+    cursor: pointer;
+} 
+
+#info-full {
+    position: absolute;
+    top: 0;
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0, 0.5);
+}
+
+#info {
+    margin-top: 100px;
+    width: 500px;
+    padding: 30px;
+    background-color: #17181B;
+    border-radius: 10px;
 }
