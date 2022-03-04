@@ -5,6 +5,7 @@ body {
   color: white;
   margin: 0;
   padding: 0;
+  font-size: 16px; 
 }
 
 h1 {
@@ -33,7 +34,7 @@ h1 {
 }
 
 #math-input {
-  /* text-align: center; */
+  text-align: center;
   height: 35px;
   text-decoration: none;
   width: 250px;
@@ -43,6 +44,8 @@ h1 {
   background-color: white;
   margin-top: 25px;
 }
+
+input, select { font-size: 100%; }
 
 button {
   margin-top: 25px;
@@ -90,9 +93,9 @@ a:hover {
 
 #info {
   margin-top: 25px;
-  margin-top: 25px;
+  max-width: 75vw;
   width: 500px;
-  padding: 30px 60px 60px 60px;
+  padding: 30px;
   background-color: #17181b;
   border-radius: 5px;
 }
