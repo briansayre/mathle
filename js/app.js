@@ -216,7 +216,10 @@ function toggleInfo() {
 function share() {
     const shareData = {
         title: 'MATHLE',
-        text: 'math and stuff',
+        text: ` Games played: ` + mstats.games +
+            ` Wins: ` + mstats.wins +
+            ` Win Percentage: ` + mstats.wins / mstats.games * 100 + "%" +
+            ` Streak: ` + mstats.streak + ``,
         url: 'https://briansayre.com/mathle/'
     }
     navigator.share(shareData)
