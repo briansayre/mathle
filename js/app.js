@@ -63,7 +63,7 @@ window.onload = function () {
 
     document.getElementById('games').innerHTML = "Games played: " + mstats.games;
     document.getElementById('wins').innerHTML = "Wins: " + mstats.wins;
-    document.getElementById('win-perc').innerHTML =  "Win Percentage: " + mstats.wins/mstats.games*100 + "%";
+    document.getElementById('win-perc').innerHTML = "Win Percentage: " + mstats.wins / mstats.games * 100 + "%";
     document.getElementById('streak').innerHTML = "Streak: " + mstats.streak;
 
 
@@ -99,8 +99,19 @@ window.onload = function () {
 }
 
 function check() {
-    var inputStr = document.getElementById("math-input").value;
-    var numbersInAnswer = inputStr.match(/[0-9 , \.]+/g);
+
+    var inputStr = document.getElementById("math-input").value.trim();
+    var numbersInAnswerStr = inputStr.match(/[0-9 , \.]+/g);
+    var numbersInAnswer = [];
+
+    if (!numbersInAnswerStr) {
+        alert("No input");
+        return;
+    }
+
+    for (var i = 0; i < 4; i++) {
+        numbersInAnswer.push(parseInt(numbersInAnswerStr[i]));
+    }
 
     // check length
     if (numbersInAnswer == null || numbersInAnswer.length != 4) {
@@ -109,6 +120,7 @@ function check() {
     }
 
     // validate all numbers are there
+
     if (!(numbersInAnswer.sort().join(',') === operands.sort().join(','))) {
         alert("Used invalid numbers");
         return;
@@ -143,7 +155,7 @@ function check() {
     document.cookie = 'mstats=' + JSON.stringify(mstats) + ';AC-C=ac-c;expires=Fri, 31 Dec 9999 23:59:59 GMT;path=/;SameSite=Lax';
     document.getElementById('games').innerHTML = "Games played: " + mstats.games;
     document.getElementById('wins').innerHTML = "Wins: " + mstats.wins;
-    document.getElementById('win-perc').innerHTML =  "Win Percentage: " + mstats.wins/mstats.games*100 + "%";
+    document.getElementById('win-perc').innerHTML = "Win Percentage: " + mstats.wins / mstats.games * 100 + "%";
     document.getElementById('streak').innerHTML = "Streak: " + mstats.streak;
 }
 
@@ -199,5 +211,5 @@ function toggleInfo() {
     } else {
         document.getElementById("info-full").style.display = "block";
     }
-    
+
 }
