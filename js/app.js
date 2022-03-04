@@ -211,5 +211,13 @@ function toggleInfo() {
     } else {
         document.getElementById("info-full").style.display = "block";
     }
+}
 
+function share() {
+    const shareData = {
+        title: 'MATHLE',
+        text: 'math and stuff',
+        url: 'https://briansayre.com/mathle/'
+    }
+    navigator.share(shareData)
 }

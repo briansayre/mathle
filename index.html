@@ -33,8 +33,9 @@
         </div>
 
         <input id="math-input" type="text" placeholder="type equation here"> </input> <br>
-        <button onclick="check()">CHECK</button> <br>
-        <a onclick="toggleInfo()">INFO</a>
+        <button onclick="check()">CHECK</button> <br><br>
+        <a onclick="toggleInfo()">INFO</a> <br><br>
+        <a id="share" onclick="share()">SHARE</a>
 
         <div id="info-full">
             <div id="info">
@@ -47,6 +48,14 @@
                 <span id="wins"></span><br><br>
                 <span id="win-perc"></span><br><br>
                 <span id="streak"></span><br><br>
+                <h2>Valid operators:</h2>
+                * Add: x + y<br><br>
+                * Divide: x / y<br><br>
+                * Modulo: x % y<br><br>
+                * Multiply: x * y<br><br>
+                * Power: x ^ y<br><br>
+                * Subtract: x - y<br><br>
+                * Parenthesis for order of operations<br><br>
                 <button onclick="toggleInfo()">CLOSE</button>
             </div>
         </div>
