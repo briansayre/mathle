@@ -1,0 +1,58 @@
+html, body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #17181B;
+    color: white;
+}
+
+#numbers {
+    margin: 50px 0 0 0;
+    text-align: center;
+}
+
+.number {
+    background-color: #2E3134;
+    display: inline-block;
+    text-align: center;
+    min-width: 60px;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 3rem;
+}
+
+#goal {
+    color: #61beca;
+}
+
+#inputs {
+    margin-top: 50px;
+    width: 300px;
+}
+
+#math-input {
+    height: 35px;
+    text-decoration: none;
+    width: 200px;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 8px;
+    background-color: white;
+}
+
+button {
+    margin: 0;
+    height: 45px;
+    color: #17181B;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    width: 70px;
+    background-color: white;
+}
+
+button:active {
+    background-color: red;
+}
+
+button:visited {
+    background-color: white;
+}
