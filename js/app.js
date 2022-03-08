@@ -5,8 +5,18 @@ var mstats = {
     "lastPlayed": "1/1/2000",
     "lastWon": "1/1/2000",
 };
-
-var seed = Math.round((new Date() - new Date(1999, 12, 8)) / (1000 * 60 * 60 * 24));
+var mtimer = {
+    "timeStarted": getSecondsIntoDay(),
+    "timeFinished": -1
+};
+var theBigDay = new Date('December 8, 1999');
+var today = new Date();
+today.setHours(0);
+today.setMinutes(0);
+today.setSeconds(0);
+var daysSinceBday = Math.floor(((today-theBigDay)/8.64e7));
+var seed = xmur3(daysSinceBday.toString());
+var rand = mulberry32(seed());
 var goal = -1;
 var operands = [];
 var operations = [
@@ -45,9 +55,10 @@ var operations = [
 ]
 
 window.onload = function () {
-
-
+    
     var prevMstats = getCookie("mstats");
+    var prevMtimer = getCookie("mtimer");
+
     if (prevMstats === "") {
         var e = '01/01/2025';
         document.cookie = 'mstats=' + JSON.stringify(mstats) + ';AC-C=ac-c;expires=Fri, 31 Dec 9999 23:59:59 GMT;path=/;SameSite=Lax';
@@ -61,14 +72,22 @@ window.onload = function () {
         document.cookie = 'mstats=' + JSON.stringify(mstats) + ';AC-C=ac-c;expires=Fri, 31 Dec 9999 23:59:59 GMT;path=/;SameSite=Lax';
     }
 
+    if (prevMtimer === "") {
+        var e = '01/01/2025';
+        document.cookie = 'mtimer=' + JSON.stringify(mtimer) + ';AC-C=ac-c;expires=Fri, 31 Dec 9999 23:59:59 GMT;path=/;SameSite=Lax';
+    } else {
+        mtimer = JSON.parse(prevMtimer);
+    }
+
     document.getElementById('games').innerHTML = "Games played: " + mstats.games;
     document.getElementById('wins').innerHTML = "Wins: " + mstats.wins;
     document.getElementById('win-perc').innerHTML = "Win Percentage: " + mstats.wins / mstats.games * 100 + "%";
     document.getElementById('streak').innerHTML = "Streak: " + mstats.streak;
+    document.getElementById('time').innerHTML = "Time took: " + getTimeTook() + " seconds";
 
 
     while (operands.length < 4) {
-        var r = Math.floor(random() * 10) + 1;
+        var r = Math.floor(rand() * 10) + 1;
         if (operands.indexOf(r) === -1) operands.push(r);
     }
 
@@ -78,9 +97,9 @@ window.onload = function () {
         try {
             takes++;
             // choose 3 operations
-            var op1index = Math.floor(random() * operations.length);
-            var op2index = Math.floor(random() * operations.length);
-            var op3index = Math.floor(random() * operations.length);
+            var op1index = Math.floor(rand() * operations.length);
+            var op2index = Math.floor(rand() * operations.length);
+            var op3index = Math.floor(rand() * operations.length);
             // apply operations
             var resultAfter1 = operations[op1index](operands[0], operands[1])
             var resultAfter2 = operations[op2index](operands[2], resultAfter1)
@@ -115,7 +134,7 @@ function check() {
 
     // check length
     if (numbersInAnswer == null || numbersInAnswer.length != 4) {
-        showResult("Didn't use all numbers");
+        showResult("Must use all 4 numbers");
         return;
     }
 
@@ -144,6 +163,11 @@ function check() {
             mstats.streak = 1;
         }
 
+        if (mtimer.timeFinished == -1) {
+            mtimer.timeFinished = getSecondsIntoDay();
+            document.cookie = 'mtimer=' + JSON.stringify(mtimer) + ';AC-C=ac-c;expires=Fri, 31 Dec 9999 23:59:59 GMT;path=/;SameSite=Lax';
+        }
+
         if (today !== mstats.lastWon) {
             mstats.lastWon = today;
             mstats.wins++;
@@ -157,11 +181,11 @@ function check() {
     document.getElementById('wins').innerHTML = "Wins: " + mstats.wins;
     document.getElementById('win-perc').innerHTML = "Win Percentage: " + mstats.wins / mstats.games * 100 + "%";
     document.getElementById('streak').innerHTML = "Streak: " + mstats.streak;
+    document.getElementById('time').innerHTML = "Time took: " + getTimeTook() + " seconds";
 }
 
 
 // HELPERS 
-
 
 function getCookie(cname) {
     let name = cname + "=";
@@ -179,14 +203,14 @@ function getCookie(cname) {
     return "";
 }
 
-function random() {
+function rand() {
     var x = Math.sin(seed++) * 10000;
     return x - Math.floor(x);
 }
 
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(random() * (i + 1));
+        const j = Math.floor(rand() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
 }
@@ -217,16 +241,48 @@ function share() {
     const shareData = {
         title: 'MATHLE',
         text: `Time to play MATHLE, nerd. 
-            Games played: ` + mstats.games + `
-            Wins: ` + mstats.wins + `
-            Win Percentage: ` + mstats.wins / mstats.games * 100 + "%" + `
-            Streak: ` + mstats.streak + ``,
+        Games played: ` + mstats.games + `
+        Wins: ` + mstats.wins + `
+        Win Percentage: ` + mstats.wins / mstats.games * 100 + "%" + `
+        Streak: ` + mstats.streak + ``,
         url: 'https://briansayre.com/mathle/'
     }
     navigator.share(shareData)
 }
 
-function  showResult(message) {
+function showResult(message) {
     document.getElementById("result-text").innerHTML = message;
     document.getElementById("result-full").style.display = "block";
+}
+
+function xmur3(str) {
+    for(var i = 0, h = 1779033703 ^ str.length; i < str.length; i++) {
+        h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
+        h = h << 13 | h >>> 19;
+    } return function() {
+        h = Math.imul(h ^ (h >>> 16), 2246822507);
+        h = Math.imul(h ^ (h >>> 13), 3266489909);
+        return (h ^= h >>> 16) >>> 0;
+    }
+}
+
+function mulberry32(a) {
+    return function() {
+      var t = a += 0x6D2B79F5;
+      t = Math.imul(t ^ t >>> 15, t | 1);
+      t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    }
+}
+
+function getSecondsIntoDay() {
+    var d = new Date();
+    return ((d.getHours()*3600) + (d.getMinutes()*60) + d.getSeconds())
+}
+
+function getTimeTook() {
+    if (mtimer.timeFinished - mtimer.timeStarted > 0) {
+        return (mtimer.timeFinished - mtimer.timeStarted).toString();
+    }
+    return "Not finished";
 }
