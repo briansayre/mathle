@@ -83,7 +83,7 @@ window.onload = function () {
     document.getElementById('wins').innerHTML = "Wins: " + mstats.wins;
     document.getElementById('win-perc').innerHTML = "Win Percentage: " + mstats.wins / mstats.games * 100 + "%";
     document.getElementById('streak').innerHTML = "Streak: " + mstats.streak;
-    document.getElementById('time').innerHTML = "Time took: " + getTimeTook() + " seconds";
+    document.getElementById('time').innerHTML = "Time took: " + getTimeTook();
 
 
     while (operands.length < 4) {
@@ -181,7 +181,7 @@ function check() {
     document.getElementById('wins').innerHTML = "Wins: " + mstats.wins;
     document.getElementById('win-perc').innerHTML = "Win Percentage: " + mstats.wins / mstats.games * 100 + "%";
     document.getElementById('streak').innerHTML = "Streak: " + mstats.streak;
-    document.getElementById('time').innerHTML = "Time took: " + getTimeTook() + " seconds";
+    document.getElementById('time').innerHTML = "Time took: " + getTimeTook();
 }
 
 
@@ -241,10 +241,8 @@ function share() {
     const shareData = {
         title: 'MATHLE',
         text: `Time to play MATHLE, nerd. 
-        Games played: ` + mstats.games + `
-        Wins: ` + mstats.wins + `
-        Win Percentage: ` + mstats.wins / mstats.games * 100 + "%" + `
-        Streak: ` + mstats.streak + ``,
+        I used ` + operands[0] + `, `+ operands[1] + `, `+ operands[2] + `, and `+ operands[3] + ` to make ` + goal `
+        Took me ` + getTimeTook(),
         url: 'https://briansayre.com/mathle/'
     }
     navigator.share(shareData)
@@ -282,7 +280,7 @@ function getSecondsIntoDay() {
 
 function getTimeTook() {
     if (mtimer.timeFinished - mtimer.timeStarted > 0) {
-        return (mtimer.timeFinished - mtimer.timeStarted).toString();
+        return (mtimer.timeFinished - mtimer.timeStarted).toString() + " seconds";
     }
     return "Not finished";
 }
