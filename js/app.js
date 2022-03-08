@@ -123,8 +123,15 @@ function check() {
     var numbersInAnswerStr = inputStr.match(/[0-9 , \.]+/g);
     var numbersInAnswer = [];
 
+    console.log(inputStr)
     if (!numbersInAnswerStr) {
         showResult("No input");
+        return;
+    }
+
+    // check length
+    if (numbersInAnswerStr == null || numbersInAnswerStr.length != 4) {
+        showResult("Must use only the 4 numbers");
         return;
     }
 
@@ -132,11 +139,6 @@ function check() {
         numbersInAnswer.push(parseInt(numbersInAnswerStr[i]));
     }
 
-    // check length
-    if (numbersInAnswer == null || numbersInAnswer.length != 4) {
-        showResult("Must use all 4 numbers");
-        return;
-    }
 
     // validate all numbers are there
 
