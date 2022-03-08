@@ -241,7 +241,7 @@ function share() {
     const shareData = {
         title: 'MATHLE',
         text: `Time to play MATHLE, nerd. 
-        I used ` + operands[0] + `, `+ operands[1] + `, `+ operands[2] + `, and `+ operands[3] + ` to make ` + goal `
+        I used ` + operands[0] + `, `+ operands[1] + `, `+ operands[2] + `, and `+ operands[3] + ` to make ` + goal + `
         Took me ` + getTimeTook(),
         url: 'https://briansayre.com/mathle/'
     }
