@@ -5,7 +5,7 @@ body {
   color: white;
   margin: 0;
   padding: 0;
-  font-size: 16px; 
+  font-size: 16px;
 }
 
 h1 {
@@ -43,7 +43,10 @@ h1 {
   background-color: white;
 }
 
-input, select { font-size: 100%; }
+input,
+select {
+  font-size: 100%;
+}
 
 button {
   margin-top: 25px;
@@ -80,7 +83,7 @@ a:hover {
   cursor: pointer;
 }
 
-#info-full {
+.modal-full {
   position: absolute;
   top: 0;
   display: none;
@@ -89,26 +92,7 @@ a:hover {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-#info {
-  margin-top: 25px;
-  max-width: 75vw;
-  width: 500px;
-  padding: 30px;
-  background-color: #17181b;
-  border-radius: 5px;
-}
-
-
-#result-full {
-  position: absolute;
-  top: 0;
-  display: none;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-#result {
+.modal-content {
   margin-top: 25px;
   max-width: 75vw;
   width: 500px;

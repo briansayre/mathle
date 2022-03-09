@@ -14,7 +14,7 @@ var today = new Date();
 today.setHours(0);
 today.setMinutes(0);
 today.setSeconds(0);
-var daysSinceBday = Math.floor(((today-theBigDay)/8.64e7));
+var daysSinceBday = Math.floor(((today - theBigDay) / 8.64e7));
 var seed = xmur3(daysSinceBday.toString());
 var rand = mulberry32(seed());
 var goal = -1;
@@ -55,20 +55,20 @@ var operations = [
 ]
 
 window.onload = function () {
-    
+
     var prevMstats = getCookie("mstats");
     var prevMtimer = getCookie("mtimer");
+    var today = (new Date()).toLocaleDateString("en-US");
 
     if (prevMstats === "") {
         var e = '01/01/2025';
         document.cookie = 'mstats=' + JSON.stringify(mstats) + ';AC-C=ac-c;expires=Fri, 31 Dec 9999 23:59:59 GMT;path=/;SameSite=Lax';
     } else {
         mstats = JSON.parse(prevMstats);
-        var today = (new Date()).toLocaleDateString("en-US");
-        if (mstats.lastPlayed != today) {
+        if (mstats.lastPlayed !== today) {
             mstats.games++;
+            mstats.lastPlayed = today;
         }
-        mstats.lastPlayed = today;
         document.cookie = 'mstats=' + JSON.stringify(mstats) + ';AC-C=ac-c;expires=Fri, 31 Dec 9999 23:59:59 GMT;path=/;SameSite=Lax';
     }
 
@@ -77,6 +77,11 @@ window.onload = function () {
         document.cookie = 'mtimer=' + JSON.stringify(mtimer) + ';AC-C=ac-c;expires=Fri, 31 Dec 9999 23:59:59 GMT;path=/;SameSite=Lax';
     } else {
         mtimer = JSON.parse(prevMtimer);
+
+        if (mstats.lastWon != today) {
+            mtimer.timeFinished = -1
+        }
+
     }
 
     document.getElementById('games').innerHTML = "Games played: " + mstats.games;
@@ -159,7 +164,7 @@ function check() {
         yesterdayDate.setDate(todayDate.getDate() - 1);
         var yesterday = yesterdayDate.toLocaleDateString("en-US");
 
-        if (mstats.lastWon == yesterday) {
+        if (mstats.lastWon === yesterday) {
             mstats.streak++;
         } else {
             mstats.streak = 1;
@@ -178,6 +183,7 @@ function check() {
     } else {
         showResult(inputVal + " is not equal to " + document.getElementById('goal').innerHTML);
     }
+
     document.cookie = 'mstats=' + JSON.stringify(mstats) + ';AC-C=ac-c;expires=Fri, 31 Dec 9999 23:59:59 GMT;path=/;SameSite=Lax';
     document.getElementById('games').innerHTML = "Games played: " + mstats.games;
     document.getElementById('wins').innerHTML = "Wins: " + mstats.wins;
@@ -205,11 +211,6 @@ function getCookie(cname) {
     return "";
 }
 
-function rand() {
-    var x = Math.sin(seed++) * 10000;
-    return x - Math.floor(x);
-}
-
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(rand() * (i + 1));
@@ -231,20 +232,21 @@ function timeStart() {
     }, 1000);
 }
 
-function toggleInfo() {
-    if (document.getElementById("info-full").style.display === "block") {
-        document.getElementById("info-full").style.display = "none";
+function toggleModal(name) {
+    if (document.getElementById(name + "-modal").style.display === "block") {
+        document.getElementById(name + "-modal").style.display = "none";
     } else {
-        document.getElementById("info-full").style.display = "block";
+        document.getElementById(name + "-modal").style.display = "block";
     }
 }
+
 
 function share() {
     const shareData = {
         title: 'MATHLE',
-        text: `Time to play MATHLE, nerd. 
-        I used ` + operands[0] + `, `+ operands[1] + `, `+ operands[2] + `, and `+ operands[3] + ` to make ` + goal + `
-        Took me ` + getTimeTook(),
+        text: `Time to play MATHLE, nerd. ` +
+        ` I used ` + operands[0] + `, ` + operands[1] + `, ` + operands[2] + `, and ` + operands[3] + ` to make ` + goal + 
+        ` Took me ` + getTimeTook(),
         url: 'https://briansayre.com/mathle/'
     }
     navigator.share(shareData)
@@ -252,14 +254,14 @@ function share() {
 
 function showResult(message) {
     document.getElementById("result-text").innerHTML = message;
-    document.getElementById("result-full").style.display = "block";
+    document.getElementById("result-modal").style.display = "block";
 }
 
 function xmur3(str) {
-    for(var i = 0, h = 1779033703 ^ str.length; i < str.length; i++) {
+    for (var i = 0, h = 1779033703 ^ str.length; i < str.length; i++) {
         h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
         h = h << 13 | h >>> 19;
-    } return function() {
+    } return function () {
         h = Math.imul(h ^ (h >>> 16), 2246822507);
         h = Math.imul(h ^ (h >>> 13), 3266489909);
         return (h ^= h >>> 16) >>> 0;
@@ -267,17 +269,17 @@ function xmur3(str) {
 }
 
 function mulberry32(a) {
-    return function() {
-      var t = a += 0x6D2B79F5;
-      t = Math.imul(t ^ t >>> 15, t | 1);
-      t ^= t + Math.imul(t ^ t >>> 7, t | 61);
-      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    return function () {
+        var t = a += 0x6D2B79F5;
+        t = Math.imul(t ^ t >>> 15, t | 1);
+        t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+        return ((t ^ t >>> 14) >>> 0) / 4294967296;
     }
 }
 
 function getSecondsIntoDay() {
     var d = new Date();
-    return ((d.getHours()*3600) + (d.getMinutes()*60) + d.getSeconds())
+    return ((d.getHours() * 3600) + (d.getMinutes() * 60) + d.getSeconds())
 }
 
 function getTimeTook() {
