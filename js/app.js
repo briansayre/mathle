@@ -123,73 +123,85 @@ window.onload = function () {
 }
 
 function check() {
+    try {
+        var inputStr = document.getElementById("math-input").value.trim();
 
-    var inputStr = document.getElementById("math-input").value.trim();
-    var numbersInAnswerStr = inputStr.match(/[0-9 , \.]+/g);
-    var numbersInAnswer = [];
-
-    console.log(inputStr)
-    if (!numbersInAnswerStr) {
-        showResult("No input");
-        return;
-    }
-
-    // check length
-    if (numbersInAnswerStr == null || numbersInAnswerStr.length != 4) {
-        showResult("Must use only the 4 numbers");
-        return;
-    }
-
-    for (var i = 0; i < 4; i++) {
-        numbersInAnswer.push(parseInt(numbersInAnswerStr[i]));
-    }
-
-
-    // validate all numbers are there
-
-    if (!(numbersInAnswer.sort().join(',') === operands.sort().join(','))) {
-        showResult("Used invalid numbers");
-        return;
-    }
-
-    var inputVal = math.evaluate(inputStr);
-
-    if (parseInt(inputVal) == parseInt(document.getElementById('goal').innerHTML)) {
-
-        showResult("Correct!");
-
-        var todayDate = new Date()
-        var today = todayDate.toLocaleDateString("en-US");
-        var yesterdayDate = new Date();
-        yesterdayDate.setDate(todayDate.getDate() - 1);
-        var yesterday = yesterdayDate.toLocaleDateString("en-US");
-
-        if (mstats.lastWon === yesterday) {
-            mstats.streak++;
-        } else {
-            mstats.streak = 1;
-        }
-
-        if (mtimer.timeFinished == -1) {
-            mtimer.timeFinished = getSecondsIntoDay();
+        if (inputStr === "clear") {
+            document.cookie = 'mstats=' + JSON.stringify(mstats) + ';AC-C=ac-c;expires=Fri, 31 Dec 9999 23:59:59 GMT;path=/;SameSite=Lax';
             document.cookie = 'mtimer=' + JSON.stringify(mtimer) + ';AC-C=ac-c;expires=Fri, 31 Dec 9999 23:59:59 GMT;path=/;SameSite=Lax';
+            location.reload();
+            return false;
         }
 
-        if (today !== mstats.lastWon) {
-            mstats.lastWon = today;
-            mstats.wins++;
+        var numbersInAnswerStr = inputStr.match(/[0-9 , \.]+/g);
+        var numbersInAnswer = [];
+
+        console.log(inputStr)
+        if (!numbersInAnswerStr) {
+            showResult("No input");
+            return;
         }
 
-    } else {
-        showResult(inputVal + " is not equal to " + document.getElementById('goal').innerHTML);
+        // check length
+        if (numbersInAnswerStr == null || numbersInAnswerStr.length != 4) {
+            showResult("Must use only the 4 numbers");
+            return;
+        }
+
+        for (var i = 0; i < 4; i++) {
+            numbersInAnswer.push(parseInt(numbersInAnswerStr[i]));
+        }
+
+
+        // validate all numbers are there
+
+        if (!(numbersInAnswer.sort().join(',') === operands.sort().join(','))) {
+            showResult("Used invalid numbers");
+            return;
+        }
+
+        var inputVal = math.evaluate(inputStr);
+
+        if (parseInt(inputVal) == parseInt(document.getElementById('goal').innerHTML)) {
+
+            showResult("Correct!");
+
+            var todayDate = new Date()
+            var today = todayDate.toLocaleDateString("en-US");
+            var yesterdayDate = new Date();
+            yesterdayDate.setDate(todayDate.getDate() - 1);
+            var yesterday = yesterdayDate.toLocaleDateString("en-US");
+
+            if (mstats.lastWon === yesterday) {
+                mstats.streak++;
+            } else {
+                mstats.streak = 1;
+            }
+
+            if (mtimer.timeFinished == -1) {
+                mtimer.timeFinished = getSecondsIntoDay();
+                document.cookie = 'mtimer=' + JSON.stringify(mtimer) + ';AC-C=ac-c;expires=Fri, 31 Dec 9999 23:59:59 GMT;path=/;SameSite=Lax';
+            }
+
+            if (today !== mstats.lastWon) {
+                mstats.lastWon = today;
+                mstats.wins++;
+            }
+
+        } else {
+            showResult(inputVal + " is not equal to " + goal);
+        }
+
+        document.cookie = 'mstats=' + JSON.stringify(mstats) + ';AC-C=ac-c;expires=Fri, 31 Dec 9999 23:59:59 GMT;path=/;SameSite=Lax';
+        document.getElementById('games').innerHTML = "Games played: " + mstats.games;
+        document.getElementById('wins').innerHTML = "Wins: " + mstats.wins;
+        document.getElementById('win-perc').innerHTML = "Win Percentage: " + mstats.wins / mstats.games * 100 + "%";
+        document.getElementById('streak').innerHTML = "Streak: " + mstats.streak;
+        document.getElementById('time').innerHTML = "Time took: " + getTimeTook();
+    } catch (e) {
+        showResult("Error: " + e.toString());
+
     }
-
-    document.cookie = 'mstats=' + JSON.stringify(mstats) + ';AC-C=ac-c;expires=Fri, 31 Dec 9999 23:59:59 GMT;path=/;SameSite=Lax';
-    document.getElementById('games').innerHTML = "Games played: " + mstats.games;
-    document.getElementById('wins').innerHTML = "Wins: " + mstats.wins;
-    document.getElementById('win-perc').innerHTML = "Win Percentage: " + mstats.wins / mstats.games * 100 + "%";
-    document.getElementById('streak').innerHTML = "Streak: " + mstats.streak;
-    document.getElementById('time').innerHTML = "Time took: " + getTimeTook();
 }
 
 
@@ -245,8 +257,8 @@ function share() {
     const shareData = {
         title: 'MATHLE',
         text: `Time to play MATHLE, nerd. ` +
-        ` I used ` + operands[0] + `, ` + operands[1] + `, ` + operands[2] + `, and ` + operands[3] + ` to make ` + goal + 
-        ` Took me ` + getTimeTook(),
+            ` I used ` + operands[0] + `, ` + operands[1] + `, ` + operands[2] + `, and ` + operands[3] + ` to make ` + goal +
+            ` Took me ` + getTimeTook(),
         url: 'https://briansayre.com/mathle/'
     }
     navigator.share(shareData)
