@@ -1,7 +1,7 @@
 var mstats = {
     "streak": 0,
     "wins": 0,
-    "games": 0,
+    "games": 1,
     "lastPlayed": "1/1/2000",
     "lastWon": "1/1/2000",
 };
