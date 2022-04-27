@@ -4,7 +4,7 @@
 <head>
     <title> MATHLE </title>
     <meta charset="UTF-8">
-    <meta name="description" content="Use the 4 numbers to obtain the goal">
+    <meta name="description" content="Use 4 numbers to obtain the goal">
     <meta name="keywords" content="mathle, math, wordle, game, puzzle, brian, sayre">
     <meta name="author" content="Brian Sayres">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-N1Q4HZ9S35"></script>
@@ -42,8 +42,8 @@
 
         <input id="math-input" type="text" placeholder="type equation here"> </input> <br>
         <button onclick="check()">CHECK</button> <br>
-        <a onclick="toggleModal('stats')">STATS</a> | <a onclick="toggleModal('info')">INFO</a> | <a id="share"
-            onclick="share()">SHARE</a>
+        <a onclick="toggleModal('stats')">STATS</a> | <a onclick="toggleModal('info')">INFO</a> | <a id="share" onclick="share()">SHARE</a> | 
+        <a id="daily" onclick="daily()">DAILY</a> | <a id="refresh" onclick="refresh()">REFRESH</a>
 
         <div class="modal-full" id="result-modal">
             <div class="modal-content">

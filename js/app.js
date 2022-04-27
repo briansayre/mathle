@@ -1,7 +1,7 @@
 var mstats = {
     "streak": 0,
     "wins": 0,
-    "games": 1,
+    "games": 0,
     "lastPlayed": "1/1/2000",
     "lastWon": "1/1/2000",
 };
@@ -14,9 +14,17 @@ var today = new Date();
 today.setHours(0);
 today.setMinutes(0);
 today.setSeconds(0);
+const params = new Proxy(new URLSearchParams(window.location.search), {
+    get: (searchParams, prop) => searchParams.get(prop),
+});
+let value = params.daily;
+console.log(value)
 var daysSinceBday = Math.floor(((today - theBigDay) / 8.64e7));
-// var seed = xmur3(daysSinceBday.toString());
-var seed = xmur3(((new Date()).getTime()).toString());
+if (value == "true") {
+    var seed = xmur3(daysSinceBday.toString());
+} else {
+    var seed = xmur3(((new Date()).getTime()).toString());
+}
 var rand = mulberry32(seed());
 var goal = -1;
 var operands = [];
@@ -99,7 +107,7 @@ window.onload = function () {
 
     var takes = 0;
 
-    while (!math.isPositive(goal) || !math.isInteger(goal) || goal < 1 || goal > 100) {
+    while (!math.isPositive(goal) || !math.isInteger(goal) || goal < 1 || goal > 100 || operands.indexOf(goal) != -1) {
         try {
             takes++;
             // choose 3 operations
@@ -107,13 +115,15 @@ window.onload = function () {
             var op2index = Math.floor(rand() * operations.length);
             var op3index = Math.floor(rand() * operations.length);
             // apply operations
-            var resultAfter1 = operations[op1index](operands[0], operands[1])
-            var resultAfter2 = operations[op2index](operands[2], resultAfter1)
-            goal = operations[op3index](operands[3], resultAfter2)
+            var resultAfter1 = operations[op1index](operands[0], operands[1]);
+            var resultAfter2 = operations[op2index](operands[2], resultAfter1);
+            goal = operations[op3index](operands[3], resultAfter2);
         } catch (error) {
             continue;
         }
     }
+
+    console.log(takes);
 
     shuffleArray(operands);
     document.getElementById('num1').innerHTML = operands[0];
@@ -263,6 +273,19 @@ function share() {
         url: 'https://briansayre.com/mathle/'
     }
     navigator.share(shareData)
+}
+
+function daily() {
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set('daily', 'true');
+    window.location.search = urlParams;
+}
+
+function refresh() {
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set('daily', 'false');
+    window.location.search = urlParams;
+    
 }
 
 function showResult(message) {
