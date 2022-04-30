@@ -42,8 +42,8 @@
 
         <input id="math-input" type="text" placeholder="type equation here"> </input> <br>
         <button onclick="check()">CHECK</button> <br>
-        <a onclick="toggleModal('stats')">STATS</a> | <a onclick="toggleModal('info')">INFO</a> | <a id="share" onclick="share()">SHARE</a> | 
-        <a id="daily" onclick="daily()">DAILY</a> | <a id="refresh" onclick="refresh()">REFRESH</a>
+        <a onclick="toggleModal('stats')">STATS</a> | <a onclick="toggleModal('info')">INFO</a> | <a id="share" onclick="share()">SHARE</a> <br><br>
+        <a id="daily" onclick="daily()">DAILY</a> | <a id="refresh" onclick="refresh()">REFRESH</a>  | <a id="answer" onclick="toggleModal('answer')">SHOW ANSWER</a>
 
         <div class="modal-full" id="result-modal">
             <div class="modal-content">
@@ -83,6 +83,16 @@
                 * Parenthesis for order of operations<br><br>
 
                 <button onclick="toggleModal('info')">CLOSE</button>
+
+            </div>
+        </div>
+
+        <div class="modal-full" id="answer-modal">
+            <div class="modal-content">
+
+                <h2 id="answers"></h2>
+
+                <button onclick="toggleModal('answer')">CLOSE</button>
 
             </div>
         </div>

@@ -18,7 +18,6 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
     get: (searchParams, prop) => searchParams.get(prop),
 });
 let value = params.daily;
-console.log(value)
 var daysSinceBday = Math.floor(((today - theBigDay) / 8.64e7));
 if (value == "true") {
     var seed = xmur3(daysSinceBday.toString());
@@ -62,6 +61,15 @@ var operations = [
     math.pow,
     math.subtract
 ]
+
+operandsToSymbol = {
+    "add": "+",
+    "divide": "/",
+    "mod": "%",
+    "multiply": "*",
+    "pow": "^",
+    "subtract": "-"
+}
 
 window.onload = function () {
 
@@ -123,7 +131,11 @@ window.onload = function () {
         }
     }
 
+    let answerStr = "(" +  operands[3] + operandsToSymbol[operations[op3index].name] + "(" + operands[2]  + operandsToSymbol[operations[op2index].name] +  "(" + operands[0] + operandsToSymbol[operations[op1index].name] + operands[1] + ")))"
+    document.getElementById("answers").innerHTML = answerStr;
+    
     console.log(takes);
+    console.log(answerStr);
 
     shuffleArray(operands);
     document.getElementById('num1').innerHTML = operands[0];
@@ -152,6 +164,8 @@ function check() {
             showResult("No input");
             return;
         }
+        
+        numbersInAnswerStr = (numbersInAnswerStr.filter(Number))
 
         // check length
         if (numbersInAnswerStr == null || numbersInAnswerStr.length != 4) {
